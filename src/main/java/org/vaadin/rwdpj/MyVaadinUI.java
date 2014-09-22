@@ -1,30 +1,32 @@
 package org.vaadin.rwdpj;
 
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import javax.servlet.annotation.WebServlet;
 
 @Theme("coolthemewithoutresponsivelogic")
 @SuppressWarnings("serial")
+@Title("Responsive Web Design with Plain Java :-)")
 public class MyVaadinUI extends UI {
+
+    private final static int MENU_WIDTH = 200;
+    private final static int MIN_SLOT_WIDTH = 300;
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
@@ -36,25 +38,30 @@ public class MyVaadinUI extends UI {
         SMALL, DESKTOP
     }
 
+    // fields used for "dynamically adjusting layout"
     private LayoutMode currentMode;
+    private int currentColumnCount;
+
+    private final String[] optionCaptions = new String[]{"Option", "Another", "Third"};
+    private final Resource[] optionIcons = new Resource[]{FontAwesome.ANCHOR, FontAwesome.ANDROID, FontAwesome.APPLE};
 
     @Override
     protected void init(VaadinRequest request) {
         layout();
 
-        getPage().addBrowserWindowResizeListener(
-                new Page.BrowserWindowResizeListener() {
-
-                    @Override
-                    public void browserWindowResized(
-                            Page.BrowserWindowResizeEvent event) {
-                                if (currentMode != getLayoutMode()) {
-                                    currentMode = getLayoutMode();
-                                    // rebuild layout if necessary
-                                    layout();
-                                }
-                            }
-                });
+        // Normally "dynamically adjusting layout" is not needed, but nice
+        // for demonstrating RWD 
+        currentMode = getLayoutMode();
+        currentColumnCount = getOptimalColumnCount();
+        getPage().addBrowserWindowResizeListener(e -> {
+            if (currentMode != getLayoutMode() || 
+                    currentColumnCount != getOptimalColumnCount()) {
+                currentMode = getLayoutMode();
+                currentColumnCount = getOptimalColumnCount();
+                // rebuild layout if necessary
+                layout();
+            }
+        });
     }
 
     private void layout() {
@@ -62,9 +69,12 @@ public class MyVaadinUI extends UI {
         VerticalLayout layout = getMainLayout();
 
         if (getLayoutMode() == LayoutMode.SMALL) {
+            // If small screen devices, add menu as first component in vertical 
+            // main layout.
             layout.addComponentAsFirst(menu);
             setContent(layout);
         } else {
+            // For larger screens, place menu on the left
             HorizontalLayout horizontalLayout = new HorizontalLayout(menu,
                     layout);
             horizontalLayout.setWidth("100%");
@@ -75,21 +85,41 @@ public class MyVaadinUI extends UI {
 
     }
 
-    protected VerticalLayout getMainLayout() {
+    private VerticalLayout getMainLayout() {
         final VerticalLayout layout = new VerticalLayout();
         layout.setSpacing(true);
 
-        Label title = new Label("<h1>RWD in plain Java</h1>", ContentMode.HTML);
+        GridLayout gridLayout = new GridLayout(getOptimalColumnCount(), 1);
+        gridLayout.setSizeFull();
+        gridLayout.addComponents(ShopItem.get(getSaneAmoutOfItems()));
+        layout.addComponent(gridLayout);
 
-        layout.
-                addComponents(title,
-                        new Label("TODO add 'fluent grid' example'"));
         return layout;
     }
 
-    private final String[] optionCaptions = new String[]{"Option", "Another", "Third"};
-    private final Resource[] optionIcons = new Resource[]{FontAwesome.ANCHOR, FontAwesome.ANDROID, FontAwesome.APPLE};
+    /**
+     * Example method how you can adjust the amount of displayed data according
+     * to end users device. This method has just some hard coded values per
+     * "mode", but the amount could of course be calculated dynamically as well.
+     * This kind of intelligent UI code can make loading faster and rendering
+     * snappier for mobile devices.
+     *
+     * @return the sane amount of items to be displayed at once
+     */
+    private int getSaneAmoutOfItems() {
+        if (currentMode == LayoutMode.SMALL) {
+            return 5;
+        } else {
+            return 10;
+        }
+    }
 
+    /**
+     * An example method that selects from two different menu implementations
+     * based on the current layout mode.
+     *
+     * @return a menu suitable for current layout mode
+     */
     private Component layoutMenu() {
         if (getLayoutMode() == LayoutMode.SMALL) {
             // "hamburger icon" and submenu
@@ -97,35 +127,53 @@ public class MyVaadinUI extends UI {
             menu.setWidth("100%");
             MenuItem root = menu.addItem("", FontAwesome.BARS, null);
             for (int i = 0; i < optionCaptions.length; i++) {
-                root.addItem(optionCaptions[i], optionIcons[i],
-                        new MenuBar.Command() {
-                            @Override
-                            public void menuSelected(MenuItem selectedItem) {
-                                Notification.show("Demo effect!");
-                            }
-                        });
+                root.addItem(optionCaptions[i], optionIcons[i], e -> {
+                    Notification.show("Demo effect!");
+                });
             }
             return menu;
         }
         Button[] buttons = new Button[optionCaptions.length];
         for (int i = 0; i < buttons.length; i++) {
-            Button button = buttons[i] = 
-                    new Button(optionCaptions[i], optionIcons[i]);
+            Button button = buttons[i]
+                    = new Button(optionCaptions[i], optionIcons[i]);
             button.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-            button.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    Notification.show("Demo effect!");
-                }
+            button.addClickListener(e -> {
+                Notification.show("Demo effect!");
             });
         }
         final VerticalLayout menulayout = new VerticalLayout(buttons);
-        menulayout.setWidthUndefined();
+        menulayout.setWidth(MENU_WIDTH, Unit.PIXELS);
+        menulayout.setMargin(true);
         return menulayout;
 
     }
 
-    public LayoutMode getLayoutMode() {
+    private int getOptimalColumnCount() {
+        return getMainAreaWidth() / MIN_SLOT_WIDTH;
+    }
+
+    private int getMainAreaWidth() {
+        int availableWidth = Page.getCurrent().getBrowserWindowWidth();
+        if (getLayoutMode() == LayoutMode.DESKTOP) {
+            // in desktop mode menu is on the left side of main content area
+            availableWidth -= MENU_WIDTH;
+        }
+        return availableWidth;
+    }
+
+    /**
+     * @return the "main mode" suitable for the client screen size. This example
+     * only has two modes, but there can naturally be as many modes as one
+     * wants. And the mode can also be determined on other details but width as
+     * well.
+     */
+    private LayoutMode getLayoutMode() {
+        // As an example, some other variables that the layout mode might depend
+        String browserApplication = Page.getCurrent().getWebBrowser().
+                getBrowserApplication();
+        boolean touchDevice = Page.getCurrent().getWebBrowser().isTouchDevice();
+
         int width = Page.getCurrent().getBrowserWindowWidth();
         if (width < 800) {
             return LayoutMode.SMALL;
