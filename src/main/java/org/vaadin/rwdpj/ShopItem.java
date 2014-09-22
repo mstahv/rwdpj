@@ -21,7 +21,7 @@ public class ShopItem extends VerticalLayout {
 
     static ShopItem[] get(int i) {
         ShopItem[] items = new ShopItem[i];
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < i; j++) {
             items[j] = new ShopItem();
         }
         return items;
