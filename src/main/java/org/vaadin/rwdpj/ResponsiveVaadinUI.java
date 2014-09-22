@@ -2,36 +2,28 @@ package org.vaadin.rwdpj;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import javax.servlet.annotation.WebServlet;
 
-@Theme("coolthemewithoutresponsivelogic")
+@Theme("valo")
 @SuppressWarnings("serial")
 @Title("Responsive Web Design with Plain Java :-)")
-public class MyVaadinUI extends UI {
+public class ResponsiveVaadinUI extends UI {
 
     private final static int MENU_WIDTH = 200;
     private final static int MIN_SLOT_WIDTH = 300;
 
-    @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
-    public static class Servlet extends VaadinServlet {
-    }
 
     public enum LayoutMode {
 
@@ -54,8 +46,8 @@ public class MyVaadinUI extends UI {
         currentMode = getLayoutMode();
         currentColumnCount = getOptimalColumnCount();
         getPage().addBrowserWindowResizeListener(e -> {
-            if (currentMode != getLayoutMode() || 
-                    currentColumnCount != getOptimalColumnCount()) {
+            if (currentMode != getLayoutMode()
+                    || currentColumnCount != getOptimalColumnCount()) {
                 currentMode = getLayoutMode();
                 currentColumnCount = getOptimalColumnCount();
                 // rebuild layout if necessary
@@ -107,11 +99,24 @@ public class MyVaadinUI extends UI {
      * @return the sane amount of items to be displayed at once
      */
     private int getSaneAmoutOfItems() {
-        if (currentMode == LayoutMode.SMALL) {
+        if (getLayoutMode() == LayoutMode.SMALL) {
             return 5;
         } else {
             return 10;
         }
+    }
+
+    private int getOptimalColumnCount() {
+        return getMainAreaWidth() / MIN_SLOT_WIDTH;
+    }
+
+    private int getMainAreaWidth() {
+        int availableWidth = Page.getCurrent().getBrowserWindowWidth();
+        if (getLayoutMode() == LayoutMode.DESKTOP) {
+            // in desktop mode menu is on the left side of main content area
+            availableWidth -= MENU_WIDTH;
+        }
+        return availableWidth;
     }
 
     /**
@@ -123,15 +128,15 @@ public class MyVaadinUI extends UI {
     private Component layoutMenu() {
         if (getLayoutMode() == LayoutMode.SMALL) {
             // "hamburger icon" and submenu
-            MenuBar menu = new MenuBar();
-            menu.setWidth("100%");
-            MenuItem root = menu.addItem("", FontAwesome.BARS, null);
+            NativeSelect select = new NativeSelect();
+            select.setWidth("100%");
+            select.addValueChangeListener(e -> {
+                Notification.show("Demo effect!");
+            });
             for (int i = 0; i < optionCaptions.length; i++) {
-                root.addItem(optionCaptions[i], optionIcons[i], e -> {
-                    Notification.show("Demo effect!");
-                });
+                select.addItem(optionCaptions[i]);
             }
-            return menu;
+            return select;
         }
         Button[] buttons = new Button[optionCaptions.length];
         for (int i = 0; i < buttons.length; i++) {
@@ -147,19 +152,6 @@ public class MyVaadinUI extends UI {
         menulayout.setMargin(true);
         return menulayout;
 
-    }
-
-    private int getOptimalColumnCount() {
-        return getMainAreaWidth() / MIN_SLOT_WIDTH;
-    }
-
-    private int getMainAreaWidth() {
-        int availableWidth = Page.getCurrent().getBrowserWindowWidth();
-        if (getLayoutMode() == LayoutMode.DESKTOP) {
-            // in desktop mode menu is on the left side of main content area
-            availableWidth -= MENU_WIDTH;
-        }
-        return availableWidth;
     }
 
     /**
