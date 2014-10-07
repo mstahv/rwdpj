@@ -1,5 +1,6 @@
 package org.vaadin.rwdpj;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.server.FontAwesome;
@@ -19,11 +20,11 @@ import com.vaadin.ui.themes.ValoTheme;
 @Theme("valo")
 @SuppressWarnings("serial")
 @Title("Responsive Web Design with Plain Java :-)")
+@Push
 public class ResponsiveVaadinUI extends UI {
 
     private final static int MENU_WIDTH = 200;
     private final static int MIN_SLOT_WIDTH = 300;
-
 
     public enum LayoutMode {
 
@@ -54,6 +55,10 @@ public class ResponsiveVaadinUI extends UI {
                 layout();
             }
         });
+
+        // Configure resize events to be "lazy"
+        setResizeLazy(true);
+
     }
 
     private void layout() {
