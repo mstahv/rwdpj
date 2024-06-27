@@ -28,12 +28,12 @@ public class ScreenWidthView extends VerticalLayout {
                 
                 As a trivial example of this, this view uses "extended client details", from the browser and then 
                 based on the browser window width, renders "cards" either horizontally or vertically. Although the
-                size is the most commonly evaluated property, you shouldn't lock yourself only to it. Similarly 
-                sized tablet might benefit from quite different UI patterns than a similar desktop browser.
+                size is the most commonly evaluated property, you shouldn't lock yourself only to it. Large 
+                sized tablet might benefit from quite different UI patterns than a similarly sized desktop browser.
                 
                 If you want to check how the app behaves on a smartphone (with a desktop computer),
-                resize the browser window and reload.
-                Although people rarely resize their browser windows on desktop (unless testing responsive design),
+                **shrink the browser window and reload**.
+                Although in real life people rarely resize their browser windows on desktop (unless testing responsive design),
                 dynamically adjusted UI may be important for example when rotating a mobile devices.
                 In the next step you'll learn how to dynamically adapt the UI, if that is needed.
                 """));
