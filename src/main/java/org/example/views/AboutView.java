@@ -17,15 +17,15 @@ public class AboutView extends VerticalLayout {
         add(new RichText().withMarkDown("""
 # Responsive Web Design in Pure Java
 
-This is a demo project showcasing various methods how Vaadin developers can enhance their apps UX with varying devices 
-and screen sizes, with pure Java skills.
+Responsive design aims to improve the usability of your app on different devices and varying window sizes. Responsive web design is by many considered to be a task dedicated to CSS magicians. With Vaadin the same end-result can also be accomplished in pure Java. And in fact, you can accomplish much more than what is possible with plain CSS.
 
-If you want to contribute your example, please make a PR to the 
-[GitHub project](https://github.com/mstahv/rwdpj).
+With an actual programming language, like Java or TypeScript, you can not just adjust some details of the layout like with CSS, but you can even change the whole component/element to be more suitable for your user. Or for example adjust the amount of data sent to the browser.
+
+Let’s check five examples on how to improve the UX on different screen sizes, in pure Java. 
+
+If you want to contribute your example or just play hands on with this example, [check it out from
+GitHub](https://github.com/mstahv/rwdpj).
 
                 """));
-        Button button = new Button("Click me",
-                event -> add(new Paragraph("Clicked!")));
-        add(button);
     }
 }
