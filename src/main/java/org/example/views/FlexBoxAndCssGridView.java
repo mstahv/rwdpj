@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Route(layout = DefaultLayout.class)
-@MenuItem(icon = VaadinIcon.QUOTE_LEFT)
+@MenuItem(icon = VaadinIcon.COMPILE)
 public class FlexBoxAndCssGridView extends VerticalLayout {
 
     public static class Card extends Div {

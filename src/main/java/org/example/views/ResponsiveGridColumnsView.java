@@ -14,7 +14,7 @@ import org.vaadin.firitin.components.grid.VGrid;
 import org.vaadin.firitin.util.ResizeObserver;
 
 @Route(layout = DefaultLayout.class)
-@MenuItem(icon = VaadinIcon.QUOTE_LEFT)
+@MenuItem(icon = VaadinIcon.TABLE)
 public class ResponsiveGridColumnsView extends VerticalLayout {
 
     Grid<Person> grid = new VGrid<>(Person.class);

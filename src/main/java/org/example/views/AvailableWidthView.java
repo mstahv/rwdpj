@@ -13,7 +13,7 @@ import org.vaadin.firitin.components.RichText;
 import org.vaadin.firitin.util.ResizeObserver;
 
 @Route(layout = DefaultLayout.class)
-@MenuItem(icon = VaadinIcon.QUOTE_LEFT)
+@MenuItem(icon = VaadinIcon.CROP)
 public class AvailableWidthView extends VerticalLayout {
 
     public static class Card extends Div {

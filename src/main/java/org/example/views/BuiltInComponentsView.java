@@ -11,7 +11,7 @@ import org.vaadin.firitin.appframework.MenuItem;
 import org.vaadin.firitin.components.RichText;
 
 @Route(layout = DefaultLayout.class)
-@MenuItem(icon = VaadinIcon.QUOTE_LEFT)
+@MenuItem(icon = VaadinIcon.COMBOBOX)
 public class BuiltInComponentsView extends VerticalLayout {
 
     public BuiltInComponentsView() {
