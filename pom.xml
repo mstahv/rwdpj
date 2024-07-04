@@ -19,6 +19,15 @@
         <relativePath/>
     </parent>
 
+    <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+            </resource>
+        </resources>
+    </build>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

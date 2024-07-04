@@ -5,6 +5,7 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import org.example.CodeSnippet;
 import org.example.DefaultLayout;
 import org.vaadin.firitin.appframework.MenuItem;
 import org.vaadin.firitin.components.RichText;

@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.example.CodeSnippet;
 import org.example.DefaultLayout;
 import org.vaadin.firitin.appframework.MenuItem;
 import org.vaadin.firitin.components.RichText;
@@ -51,12 +52,16 @@ public class FlexBoxAndCssGridView extends VerticalLayout {
                 this is a good example how you can efficiently utilize the available screen estate, completely without 
                 breakpoint base logic.
                 
+                """));
+
+        add(new CodeSnippet(getClass(), 67, 71));
+
+        add(new RichText().withMarkDown("""
                 With Flexbox and Css Grid there is plenty of other possibilities, but naturally the rather "extreme
                 flexibility" can also make things rather complex and decrease the maintainability. I suggest to package
                 your "recipes" with Flexbox and Css Grid into classes, both for improved readability and re-usability.
                 And help me to remind Rolf periodically that we (Java developers) would really benefit of a couple of
-                well named (and designed) presets for these complex layout components 🧸  
-                
+                well named (and designed) presets for these complex layout components 🧸
                 """));
 
         class HorizontalLayoutThatWraps extends FlexLayout {

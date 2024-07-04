@@ -1,12 +1,14 @@
 package org.example.views;
 
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.router.Route;
+import org.example.CodeSnippet;
 import org.example.DefaultLayout;
 import org.vaadin.firitin.appframework.MenuItem;
 import org.vaadin.firitin.components.RichText;
@@ -26,9 +28,9 @@ public class AvailableWidthView extends VerticalLayout {
     }
 
     public AvailableWidthView() {
+        add(new H1("Responding to available width"));
+        add(new CodeSnippet(getClass(), 70, 79));
         add(new RichText().withMarkDown("""
-                # Responding to available width
-
                 In the previous example we used quite trivial mechanism to do decisions based on the screen size.
                 Most commonly in CSS these are done with a feature called media queries, that allows you to target
                 selected browser window sizes (and certain other properties).
@@ -51,7 +53,7 @@ public class AvailableWidthView extends VerticalLayout {
                 traditional Css media queres, the logic easily becomes very complex that way. Also you'd also need to 
                 fetch the initial size using retrieveExtendedClientDetails() method from the Page. 
                  
-                Thus, I'm instead using helper class called ResizeObserver built around the similarly named
+                Thus, we here use a helper class called [ResizeObserver](https://vaadin.com/directory/component/flow-viritin) built around the similarly named
                 JS API. The helper is currently available in the Viritin add-on, but I hope we can get similar helper to
                 the core for the next minor release. The Java API has (configurable) debouncing for the events, so it 
                 doesn't choke the client-server communication if the browser drops you an event on each and every pixel

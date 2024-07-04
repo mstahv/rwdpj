@@ -2,12 +2,14 @@ package org.example.views;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.router.Route;
+import org.example.CodeSnippet;
 import org.example.DefaultLayout;
 import org.vaadin.firitin.appframework.MenuItem;
 import org.vaadin.firitin.components.RichText;
@@ -18,9 +20,11 @@ import org.vaadin.firitin.util.ResizeObserver;
 public class ScreenWidthView extends VerticalLayout {
 
     public ScreenWidthView() {
+        add(new H1("Changing the layout based device properties"));
+
+        add(new CodeSnippet(getClass(), 46, 52));
+
         add(new RichText().withMarkDown("""
-                # Changing the layout based device properties
-                
                 At most trivial level, responsive design in your Vaadin application can be just selecting components
                 appropriate for the device and use case. There are a number of different mechanisms to implmement
                 this logic, from sniffing user agent (generally not considered the best practice) to reading various

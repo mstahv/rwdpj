@@ -21,7 +21,7 @@ public class BuiltInComponentsView extends VerticalLayout {
         Vaadin components provide certain "responsive features" out of the box, when appropriate.
         Sometimes that is all what is needed for a decent UX.
         
-        A grand example is the AppLayout, used by parent layout in this example, will adapt based on the
+        A grand example is the [AppLayout](https://vaadin.com/docs/latest/components/app-layout), used by parent layout in this example, will adapt based on the
         screen size.
         
         Also, for example the Select component behaves slightly differently than on desktop device, 
