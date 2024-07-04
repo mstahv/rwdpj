@@ -27,11 +27,7 @@ public class CodeSnippet extends Component {
         try {
             String res = clazz.getName().replaceAll("\\.", "/");
             // This only works if code is exposed to the JAR file...
-            InputStream resourceAsStream = getClass().getResourceAsStream(clazz.getSimpleName() + ".java");
-            if(resourceAsStream == null) {
-                resourceAsStream = new FileInputStream("src/main/java/" + res + ".java");
-            }
-
+            InputStream resourceAsStream = getClass().getResourceAsStream("/" + res + ".java");
 
             List<String> lines = IOUtils.readLines(resourceAsStream).subList(startLine - 1, endLine);
             Pattern p = Pattern.compile("\\S");  // insert your pattern here
