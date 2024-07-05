@@ -1,11 +1,8 @@
 package org.example.views;
 
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.example.CodeSnippet;
 import org.example.DefaultLayout;
 import org.vaadin.firitin.appframework.MenuItem;
 import org.vaadin.firitin.components.RichText;
@@ -18,13 +15,13 @@ public class AboutView extends VerticalLayout {
         add(new RichText().withMarkDown("""
 # Responsive Web Design in Pure Java
 
-Responsive design aims to improve the usability of your app on different devices and varying window sizes. Responsive web design is by many considered to be a task dedicated to CSS magicians. With Vaadin the same end-result can also be accomplished in pure Java. And in fact, you can accomplish much more than what is possible with plain CSS.
+Responsive design aims to improve the usability of your app on different devices and varying window sizes. Responsive web design is considered by many to be a task dedicated to CSS magicians. With Vaadin, the same end result can also be accomplished in pure Java. In fact, you can achieve much more than what is possible with plain CSS.
 
-With an actual programming language, like Java or TypeScript, you can not just adjust some details of the layout like with CSS, but you can even change the whole component/element to be more suitable for your user. Or for example adjust the amount of data sent to the browser.
+With an actual programming language, like Java or TypeScript, you can not only adjust some details of the layout as you would with CSS, but you can also change entire components or elements to be more suitable for your user. For example, you can adjust the amount of data sent to the browser.
 
-Let’s check five examples on how to improve the UX on different screen sizes, in pure Java. 
-
-If you want to contribute your example or just play hands on with this example, [check it out from
+Let’s check out five examples of how to improve the UX on different screen sizes using pure Java.
+                                                                                               
+To see the full source of the example view, use the link in top right corner. If you want to contribute your example or just try this hands-on with IDE [check it out from
 GitHub](https://github.com/mstahv/rwdpj).
 
                 """));
